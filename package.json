@@ -1,0 +1,31 @@
+{
+  "name": "micro-builder-cli",
+  "version": "1.0.0",
+  "description": "Build your micro-frontend Architecture based app in one command line ",
+  "main": "bin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "micro-builder": "./bin/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heyolaniran/micro-builder-cli.git"
+  },
+  "keywords": [
+    "CLI",
+    "Micro-Frontend",
+    "NodeJS",
+    "Shell"
+  ],
+  "author": "heyolaniran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heyolaniran/micro-builder-cli/issues"
+  },
+  "homepage": "https://github.com/heyolaniran/micro-builder-cli#readme",
+  "dependencies": {
+    "yargs": "^17.7.2"
+  }
+}
