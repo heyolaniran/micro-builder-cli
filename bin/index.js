@@ -1,6 +1,8 @@
 #! /usr/bin/env node
 const yargs = require("yargs/yargs")
+const { exec } = require('node:child_process')
 const availableMode = ['build' , 'start'] ; 
+var repositories = [] ; 
 yargs(process.argv.slice(2))
 .options('mode' , {
     alias : 'm' , 
@@ -16,7 +18,7 @@ yargs(process.argv.slice(2))
 
 const argv = yargs(process.argv).argv ; 
 
-const defaultMode = "build" ; 
+const defaultMode = "start" ; 
 var mode = argv.m || argv.mode   ; 
 var path = argv.p  || argv.path ; 
 
@@ -37,4 +39,23 @@ if(mode !== undefined) {
         console.log(' Your default valid  mode is  : ',  mode) ; 
     }
 }
+
+ exec(`ls ${path}`, (err, output) => {
+    // once the command has completed, the callback function is called
+    if (err) {
+        // log and return if we encounter an error
+        console.error("could not execute command: ", err)
+        return
+    }
+    // log the output received from the command
+   var repo = output.split("\n") ; 
+    repo.map(element => { 
+      if(element.includes("micro")) { 
+        repositories.push(element)
+      }
+   })
+   console.log(repositories) ; 
+})
+
+
 
