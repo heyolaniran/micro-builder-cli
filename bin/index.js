@@ -20,10 +20,12 @@ const defaultMode = "build" ;
 var mode = argv.m || argv.mode   ; 
 var path = argv.p  || argv.path ; 
 
-if(path) { 
+if(path !== undefined) { 
+   path =  path === true? '.' : path ; 
     console.log("path to apply" , path); 
 }else 
 {
+    path = '.' ; 
     console.log("default path is ."); 
 }
 
