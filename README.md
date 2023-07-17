@@ -12,3 +12,7 @@ git clone https://github.com/heyolaniran/micro-builder-cli.git
 cd micro-builder-cli
 npm install -g .
 ```
+
+## Available scripts on micro
+### Help service 
+![Help service to show all available commands](https://github.com/heyolaniran/micro-builder-cli/images/micro.png)
