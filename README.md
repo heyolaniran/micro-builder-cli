@@ -16,3 +16,7 @@ npm install -g .
 ## Available scripts on micro
 ### Help service 
 ![Help service to show all available commands](https://github.com/heyolaniran/micro-builder-cli/blob/main/images/micro.png)
+
+
+### Start servers with micro 
+![Start your servers with micro-builder-cli](https://github.com/heyolaniran/micro-builder-cli/blob/main/images/micro_start.png)
