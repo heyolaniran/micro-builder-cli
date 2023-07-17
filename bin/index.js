@@ -22,14 +22,7 @@ const defaultMode = "start" ;
 var mode = argv.m || argv.mode   ; 
 var path = argv.p  || argv.path ; 
 
-if(path !== undefined) { 
-   path =  path === true? '.' : path ; 
-    console.log("path to apply" , path); 
-}else 
-{
-    path = '.' ; 
-    console.log("default path is ."); 
-}
+
 
 if(mode !== undefined) { 
     if(availableMode.includes(mode)) {
@@ -40,12 +33,43 @@ if(mode !== undefined) {
     }
 }
 
+if(path !== undefined) { 
+    path =  path === true? '.' : path ; 
+     console.log("path to apply" , path); 
+ }else 
+ {
+     path = '.' ; 
+     console.log("default path is ."); 
+ }
+
+
+  
+       exec(`cd ${path}`, (err, output) => { 
+            if(err) { 
+                console.log("We have some difficulties to acces to your project directory. Take a look  :)")
+
+               process.exit(1) ; 
+            } 
+    
+            console.log("We're in your amazing project directory") ; 
+            return true; 
+
+        })
+
+       
+
+
+    
+
+
+
  exec(`ls ${path}`, (err, output) => {
     // once the command has completed, the callback function is called
     if (err) {
         // log and return if we encounter an error
-        console.error("could not execute command: ", err)
-        return
+        console.error("could not execute command; something went wrong. Take a look ! ")
+        process.exit(1)
+      
     }
     // log the output received from the command
    var repo = output.split("\n") ; 
@@ -54,8 +78,17 @@ if(mode !== undefined) {
         repositories.push(element)
       }
    })
-   console.log(repositories) ; 
+
+  if(repositories.length > 0) { 
+    repositories.map((directory) => { 
+        exec(`cd ${directory}`)
+    })
+  }else {
+    console.log(`Nothing to ${mode} in this directory`) ; 
+  }
 })
+
+
 
 
 
