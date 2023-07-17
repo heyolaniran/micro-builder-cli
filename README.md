@@ -20,3 +20,8 @@ npm install -g .
 
 ### Start servers with micro 
 ![Start your servers with micro-builder-cli](https://github.com/heyolaniran/micro-builder-cli/blob/main/images/micro_start.png)
+
+
+### Build your project for production 
+![Build your project with micro-builder-cli](https://github.com/heyolaniran/micro-builder-cli/blob/main/images/micro_build.png)
+
