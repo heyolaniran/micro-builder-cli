@@ -15,4 +15,4 @@ npm install -g .
 
 ## Available scripts on micro
 ### Help service 
-![Help service to show all available commands](https://myoctocat.com/assets/images/base-octocat.svg)
+![Help service to show all available commands](https://github.com/heyolaniran/micro-builder-cli/blob/main/images/micro.png)
