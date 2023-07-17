@@ -1,7 +1,11 @@
 #! /usr/bin/env node
 const yargs = require("yargs/yargs")
 const { exec } = require('node:child_process')
+const chalk = require("chalk")
 const availableMode = ['build' , 'start'] ; 
+const error = (msg) => { 
+    console.log(chalk.red(msg))
+}
 var repositories = [] ; 
 yargs(process.argv.slice(2))
 .options('mode' , {
@@ -46,12 +50,12 @@ if(path !== undefined) {
   
        exec(`cd ${path}`, (err, output) => { 
             if(err) { 
-                console.log("We have some difficulties to acces to your project directory. Take a look  :)")
+                error("We have some difficulties to acces to your project directory. Take a look  :)")
 
                process.exit(1) ; 
             } 
     
-            console.log("We're in your amazing project directory") ; 
+            console.log(chalk.green("We're in your amazing project directory")) ; 
             return true; 
 
         })
@@ -67,7 +71,7 @@ if(path !== undefined) {
     // once the command has completed, the callback function is called
     if (err) {
         // log and return if we encounter an error
-        console.error("could not execute command; something went wrong. Take a look ! ")
+        error("could not execute command; something went wrong. Take a look ! ")
         process.exit(1)
       
     }
@@ -81,10 +85,27 @@ if(path !== undefined) {
 
   if(repositories.length > 0) { 
     repositories.map((directory) => { 
-        exec(`cd ${directory}`)
+       exec(`cd ${directory}`, (err , output) => { 
+           if(err) { 
+             error("We find something wrong there.") ; 
+             process.exit(1) ; 
+           }
+           else { 
+             exec(`npm run ${mode}`, (err, output) => { 
+                if(err) 
+                {
+                    error(`There is not script adapted to ${mode} your project in ${directory}. \n Please take a look for your scripts in your package.json`)
+                    process.exit(1)
+                } 
+                else { 
+                    console.log(output)
+                }
+             })
+           }
+       })
     })
   }else {
-    console.log(`Nothing to ${mode} in this directory`) ; 
+    error(`Nothing to ${mode} in this directory`) ; 
   }
 })
 
