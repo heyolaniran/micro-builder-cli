@@ -29,4 +29,4 @@ npm install -g .
 
 ![Build your project with micro-builder-cli](https://github.com/heyolaniran/micro-builder-cli/blob/main/images/micro_build.png)
 
-### Integration of github Actions workflow test locally (soon)
+## Integration of github Actions workflow test locally (soon)
