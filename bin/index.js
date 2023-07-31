@@ -7,7 +7,7 @@ const error = (msg) => {
     console.log(chalk.red(msg))
 }
 var repositories = [] ; 
-yargs(process.argv.slice(2))
+yargs(process.argv.slice(4))
 .options('mode' , {
     alias : 'm' , 
     describe : "Would you 'build' your project for production or just 'start' your servers ?"
@@ -15,6 +15,14 @@ yargs(process.argv.slice(2))
 .option('path', {
     alias: 'p',
     describe: 'Where is located your amazing project on your Disk ? '
+  })
+  .option('pre-install', {
+    alias : 'b' , 
+    describe: 'What script you would run before your mode ?'
+  })
+  .option('post-intall' , { 
+    alias : 'a' , 
+    describe : "What script you would run after your mode ?"
   })
   .demandOption(['mode', ], 'Please provide mode argument to launch your project with this tool')
   .help()
