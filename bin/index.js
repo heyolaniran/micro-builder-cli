@@ -63,7 +63,7 @@ if(path !== undefined) {
                process.exit(1) ; 
             } 
     
-            console.log(chalk.green("We're in your amazing project directory")) ; 
+           success("We're in your amazing project directory") ; 
             return true; 
 
         })
@@ -94,7 +94,7 @@ if(path !== undefined) {
                   else { 
                     if(preScript != true)
                     {
-                       preMode(preScript) 
+                       preMode(preScript, directory) 
                     }
 
                     exec(`npm run ${mode}`, (err, output) => { 

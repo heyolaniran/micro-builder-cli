@@ -1,15 +1,38 @@
-
+const error = require('./error') 
 const { exec } = require('node:child_process') 
 const chalk = require("chalk")
+const fs = require('fs')
+const success = require('./success')
 const preMode = (script, path) => { 
-    console.log(`You are trying to run ${chalk.green(script)} before your mode execution...`)
-
-    exec(` cd ${path}` , (err, output) => { 
+  
+    exec(` ls ${path}` , (err, output) => { 
         if(err) { 
-            error("We have some difficulties to acces to your project directory. Take a look  :)")
-
+            error(`We have some difficulties to access to ${path} Take a look  :)`)
            process.exit(1) ; 
         } 
+        var files = output.split("\n") ; 
+        
+        if(!files.includes('package.json'))
+        {
+            error(`${path} doesn't contain package.json`)
+            process.exit(1)
+        }else { 
+            const package = fs.readFileSync(`${path}/package.json`, 'utf8') ; 
+            const data = JSON.parse(package)
+           if(data.scripts.hasOwnProperty(script)) { 
+            console.log(`We are trying to run ${chalk.green(script)} before your mode execution...`)
+             exec(`npm run ${script}`, (err , output) => { 
+                if(err) { 
+                    error(` Something gone wrong while we ran ${script} script `)
+                    process.exit(1)
+                }
+                console.log(output)
+                success(`${script} script successfully ran`)
+             })
+           }
+        }
+
+           
     })
 
 } 
