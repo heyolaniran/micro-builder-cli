@@ -5,7 +5,9 @@ const chalk = require("chalk")
 const availableMode = ['build' , 'start'] ; 
 const preMode = require("./pre-mode")
 const error = require('./error') 
-const success = require('./success')
+const success = require('./success');
+const { resolve } = require("node:path");
+const { rejects } = require("node:assert");
 var repositories = [] ; 
 yargs(process.argv.slice(2))
 .options('mode' , {
@@ -64,54 +66,60 @@ if(path !== undefined) {
             } 
     
            success("We're in your amazing project directory") ; 
-            return true; 
+    
 
         })
 
-        exec(`ls ${path}`, (err, output) => {
-            // once the command has completed, the callback function is called
-            if (err) {
-                // log and return if we encounter an error
-                error("could not execute command; something went wrong. Take a look ! ")
-                process.exit(1)
-              
-            }
-            // log the output received from the command
-          var repo = output.split("\n") ; 
-            repo.map(element => { 
-              if(element.includes("micro")) { 
-                repositories.push(element)
+           exec(`ls ${path}`, (err, output) => {
+              // once the command has completed, the callback function is called
+              if (err) {
+                  // log and return if we encounter an error
+                  error("could not execute command; something went wrong. Take a look ! ")
+                  process.exit(1)
+                
               }
+              // log the output received from the command
+            var repo = output.split("\n") ; 
+              repo.map(element => { 
+                if(element.includes("micro")) { 
+                  repositories.push(element)
+                }
+            })
+
+            if(repositories.length > 0) { 
+              repositories.map((directory) => { 
+                exec(`cd ${directory}`, (err , output) => { 
+                    if(err) { 
+                      error("We find something wrong here.") ; 
+                      process.exit(1) ; 
+                    }
+                    else { 
+                      if(preScript != true && preScript !== undefined && preScript !== ""){
+                        preMode(preScript, directory, mode) 
+                      } else {
+                        exec(`npm --prefix ${directory} ${mode}`, (err, output) => { 
+                          if(err) 
+                          {
+                              error(`There is not script adapted to ${mode} your project in ${directory}. \n Please take a look for your scripts in your package.json`)
+                              process.exit(1)
+                          } 
+                          else { 
+                            success(`Your ${mode} process is successfully completed`)
+                          }
+                       })
+                      }
+                        
+                      
+
+                    }
+                })
+              })
+            }else {
+              error(`Nothing to ${mode} in this directory`) ; 
+            }
           })
 
-          if(repositories.length > 0) { 
-            repositories.map((directory) => { 
-              exec(`cd ${directory}`, (err , output) => { 
-                  if(err) { 
-                    error("We find something wrong there.") ; 
-                    process.exit(1) ; 
-                  }
-                  else { 
-                    if(preScript != true)
-                    {
-                       preMode(preScript, directory) 
-                    }
-
-                    exec(`npm --prefix ${directory} ${mode}`, (err, output) => { 
-                        if(err) 
-                        {
-                            error(`There is not script adapted to ${mode} your project in ${directory}. \n Please take a look for your scripts in your package.json`)
-                            process.exit(1)
-                        } 
-                        
-                    })
-                  }
-              })
-            })
-          }else {
-            error(`Nothing to ${mode} in this directory`) ; 
-          }
-        })
+    
 
 
 
