@@ -21,14 +21,23 @@ const preMode = (script, path) => {
             const data = JSON.parse(package)
            if(data.scripts.hasOwnProperty(script)) { 
             console.log(`We are trying to run ${chalk.green(script)} before your mode execution...`)
-             exec(`npm run ${script}`, (err , output) => { 
+            exec(`cd ${path}` , (err , output) => { 
                 if(err) { 
-                    error(` Something gone wrong while we ran ${script} script `)
+                    error(`We have some difficulties to enter in ${path} directory`)
                     process.exit(1)
                 }
-                console.log(output)
-                success(`${script} script successfully ran`)
-             })
+              
+                exec(`npm --prefix ${path} ${script}`, (err , output) => { 
+                    if(err) { 
+                        error(` Something gone wrong while we ran ${script} script `)
+                        console.error(err)
+                        process.exit(1)
+                    }
+                    console.log(output)
+                    success(`${script} script successfully ran`)
+                 })
+            })
+          
            }
         }
 

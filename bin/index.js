@@ -97,15 +97,13 @@ if(path !== undefined) {
                        preMode(preScript, directory) 
                     }
 
-                    exec(`npm run ${mode}`, (err, output) => { 
+                    exec(`npm --prefix ${directory} ${mode}`, (err, output) => { 
                         if(err) 
                         {
                             error(`There is not script adapted to ${mode} your project in ${directory}. \n Please take a look for your scripts in your package.json`)
                             process.exit(1)
                         } 
-                        else { 
-                            console.log(output)
-                        }
+                        
                     })
                   }
               })
