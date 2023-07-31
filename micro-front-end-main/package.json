@@ -1,0 +1,10 @@
+{
+    "name" : "micro cli", 
+    "scripts" : { 
+        "start" : "node ./index.js" , 
+        "test": "node ./index.js"
+    }, 
+    "bin": {
+        "start" : "node ./index.js"
+    }
+}

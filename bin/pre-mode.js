@@ -3,7 +3,7 @@ const { exec } = require('node:child_process')
 const chalk = require("chalk")
 const fs = require('fs')
 const success = require('./success')
-const preMode = (script, path) => { 
+const preMode = (script, path, mode) => { 
   
     exec(` ls ${path}` , (err, output) => { 
         if(err) { 
@@ -33,8 +33,17 @@ const preMode = (script, path) => {
                         console.error(err)
                         process.exit(1)
                     }
-                    console.log(output)
                     success(`${script} script successfully ran`)
+                    exec(`npm --prefix ${path} ${mode}`, (err, output) => { 
+                        if(err) 
+                        {
+                            error(`There is not script adapted to ${mode} your project in ${directory}. \n Please take a look for your scripts in your package.json`)
+                            process.exit(1)
+                        } 
+                        else { 
+                          success(`Your ${mode} process is successfully completed`)
+                        }
+                    })
                  })
             })
           
