@@ -19,7 +19,7 @@ npm install -g .
 
 ### Help service
 
-![Help service to show all available commands](https://github.com/heyolaniran/micro-builder-cli/blob/main/images/micro.png)
+![Help service to show all available commands](https://github.com/heyolaniran/micro-builder-cli/blob/main/images/micro-pre.png)
 
 ### Start servers with micro
 
@@ -28,5 +28,8 @@ npm install -g .
 ### Build your project for production
 
 ![Build your project with micro-builder-cli](https://github.com/heyolaniran/micro-builder-cli/blob/main/images/micro_build.png)
+
+### Run Script before execute your mode 
+![Run script](https://github.com/heyolaniran/micro-builder-cli/blob/main/images/carbon-pre-script.png)
 
 ## Integration of github Actions workflow test locally (soon)
