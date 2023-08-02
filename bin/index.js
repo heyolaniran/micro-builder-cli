@@ -4,10 +4,9 @@ const { exec } = require('node:child_process')
 const chalk = require("chalk")
 const availableMode = ['build' , 'start'] ; 
 const preMode = require("./pre-mode")
+const postMode = require('./post-mode')
 const error = require('./error') 
 const success = require('./success');
-const { resolve } = require("node:path");
-const { rejects } = require("node:assert");
 var repositories = [] ; 
 yargs(process.argv.slice(2))
 .options('mode' , {
@@ -37,6 +36,10 @@ var mode = argv.m || argv.mode   ;
 var path = argv.p  || argv.path ; 
 const preScript = argv.b || argv.pre
 
+const postScript= argv.post || argv.a ; 
+
+const  {argvsExist , preScriptExist} = require('./utils/argvsUtils');
+const { response } = require("express");
 
 if(mode !== undefined) { 
     if(availableMode.includes(mode)) {
@@ -94,7 +97,7 @@ if(path !== undefined) {
                       process.exit(1) ; 
                     }
                     else { 
-                      if(preScript != true && preScript !== undefined && preScript !== ""){
+                      if(argvsExist(preScript)){
                         preMode(preScript, directory, mode) 
                       } else {
                         exec(`npm --prefix ${directory} ${mode}`, (err, output) => { 
@@ -108,8 +111,11 @@ if(path !== undefined) {
                           }
                        })
                       }
-                        
                       
+                      if(preScriptExist(preScript , postScript)) { 
+                          postMode()
+                      }
+
 
                     }
                 })
