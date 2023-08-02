@@ -32,4 +32,9 @@ npm install -g .
 ### Run Script before execute your mode 
 ![Run script](https://github.com/heyolaniran/micro-builder-cli/blob/main/images/carbon-pre-script.png)
 
+### Run Script After execute your mode 
+![Run script](https://github.com/heyolaniran/micro-builder-cli/blob/main/images/post-script.png)
+
+
+
 ## Integration of github Actions workflow test locally (soon)
